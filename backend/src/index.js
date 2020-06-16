@@ -6,6 +6,8 @@ const app = express();
 
 
 app.get('/projects', ( req, res) => {
+  const { title, owner } = req.query;
+  console.log(title, owner);
   return res.json([
     'Projeto 1',
     'Projeto 2',
