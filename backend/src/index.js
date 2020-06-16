@@ -23,6 +23,9 @@ app.post('/projects', (req, res) => {
   ]);
 });
 app.put('/projects/:id', (req, res) => {
+  const { id } = req.params;
+
+  console.log( req.params );
   return res.json([
     'Projeto 5',
     'Projeto 2',
