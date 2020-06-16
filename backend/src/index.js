@@ -4,11 +4,37 @@ const PORT = 3334;
 
 const app = express();
 
-app.get(
-  '/',
-  ( req, res) => {
-    return res.json({message: 'Hello'})
-  } 
-)
 
-app.listen(PORT);
+app.get('/projects', ( req, res) => {
+  return res.json([
+    'Projeto 1',
+    'Projeto 2',
+    'Projeto 3'
+  ]);
+});
+app.post('/projects', (req, res) => {
+  return res.json([
+    'Projeto 1',
+    'Projeto 2',
+    'Projeto 3',
+    'Projeto 4'
+  ]);
+});
+app.put('/projects/:id', (req, res) => {
+  return res.json([
+    'Projeto 5',
+    'Projeto 2',
+    'Projeto 3',
+    'Projeto 4'
+  ]);
+});
+app.delete('/projects/:id', (req, res) => {
+  return res.json([
+    'Projeto 2',
+    'Projeto 3',
+    'Projeto 4'
+  ]);
+});
+app.listen(PORT, () => {
+  console.log('🚀 Back-end started!');
+});
