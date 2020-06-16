@@ -4,6 +4,7 @@ const PORT = 3334;
 
 const app = express();
 
+app.use(express.json());
 
 app.get('/projects', ( req, res) => {
   const { title, owner } = req.query;
@@ -15,6 +16,8 @@ app.get('/projects', ( req, res) => {
   ]);
 });
 app.post('/projects', (req, res) => {
+  const { body } = req;
+  console.log(body);
   return res.json([
     'Projeto 1',
     'Projeto 2',
