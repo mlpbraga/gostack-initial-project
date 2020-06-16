@@ -10,9 +10,11 @@ app.use(express.json());
 const projects = [];
 
 app.get('/projects', ( req, res) => {
-  // const { title, owner } = req.query;
-  // console.log(title, owner);
-  return res.json(projects);
+  const { title } = req.query;
+  const results = title
+    ? projects.filter(project => project.title.includes(title))
+    : projects;
+  return res.json(results);
 });
 app.post('/projects', (req, res) => {
   const { title, owner } = req.body;
