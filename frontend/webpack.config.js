@@ -17,12 +17,16 @@ module.exports = {
         use: { loader: 'babel-loader' }
       },
       {
-        test: /\.css$/, //arquivos que terminam com .js
+        test: /\.css$/,
         exclude: /node_modules/, //arquivos do node modules não passarão pelo loader
         use: [
           { loader: 'style-loader' }, // aplica o css
           { loader: 'css-loader' }, // interpreta o css
         ]
+      },
+      {
+        test: /.*\.(gif|png|jpe?g)$/i,
+        use: { loader: 'file-loader' },
       }
     ]
   }
