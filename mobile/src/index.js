@@ -5,12 +5,27 @@ import {
   StyleSheet,
   StatusBar,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import api from './services/api';
 
 const App = () => {
   const [projects, setProjects] = useState([]);
+
+  const handleAddProject = async () => {
+    const response = await api.post('projects', {
+      title: `Projeto ${Date.now()}`,
+      owner: `Luísa Braga`,
+    });
+
+    const project = response.data;
+
+    setProjects([
+      ...projects,
+      project
+    ]);
+  };
 
   useEffect(() => {
     api.get('projects').then(response => {
@@ -29,6 +44,13 @@ const App = () => {
             <Text styles={styles.project}>{project.title}</Text>
           )}
         />
+        <TouchableOpacity
+          activeOpacity={0.6}
+          style={style.button}
+          onPress={handleAddProject}
+        >
+          <Text style={style.buttonText}>Adicionar projeto</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     </>
   )
@@ -43,6 +65,17 @@ const styles = StyleSheet.create({
   project: {
     color: '#fff',
     fontSize: 20,
-  }
+  },
+  button: {
+    backgroundColor: '#FFF',
+    margin: 20,
+    padding: 50,
+    borderRadius:4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    fontWeight: 'bold'
+  },
 })
 export default App;
