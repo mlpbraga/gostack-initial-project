@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './App.css';
-import image from './assets/image.jpg';
 
 import Header from './Header';
 
-const App = () => {
-  const [projects, setProjects] = useState(['Desenvolvimento de App', 'FronWeb']);
+import api from './services/api';
 
-  const handleAddProject = () => {
+const App = () => {
+  const [projects, setProjects] = useState([]);
+
+  const handleAddProject = async () => {
+    const response = await api.post('projects', {
+      title: `Projeto ${Date.now()}`,
+      owner: `Luísa Braga`,
+    });
+
+    const project = response.data;
+
     setProjects([
       ...projects,
-      `Projeto ${Date.now()}`,
-    ])
-    console.log(projects)
+      project
+    ]);
   };
+
+  useEffect(() => {
+    api.get('projects').then( response => {
+      setProjects(response.data);
+    });
+  }, []);
 
   return (
     <>
       <Header title='Homepage'/>
-      <img width={300} src={image}/>
       <ul>
-        {projects.map(project => <li key={project}>{project}</li> )}
+        {projects.map(project => (
+          <li key={project.id}>
+            <strong>{project.title}</strong>
+            <p>{project.owner}</p>
+          </li>
+        ))}
       </ul>
 
       <button type='button' onClick={handleAddProject}>Adicionar projeto</button>
